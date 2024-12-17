@@ -1,0 +1,50 @@
+image: registry.gitlab.com/vtt2/foundry-system-build:bae08144868725815519d24ef9929b134a447e95
+
+variables:
+  DOCKER_HOST: tcp://docker:2375
+
+stages:
+  - build
+  - package
+  - upload
+  - release
+
+build:
+  stage: build
+  script:
+    - /bin/bash -c ".gitlab-scripts/lint.sh"
+  artifacts:
+    paths:
+      - src/css/*
+      - src/packs/*
+
+package:
+  stage: package
+  script:
+    - /bin/bash -c ".gitlab-scripts/package.sh"
+  artifacts:
+    paths:
+      - build/artifacts/*
+      - src/module.json
+  dependencies:
+    - build
+
+upload:
+  stage: upload
+  image: curlimages/curl:latest
+  rules:
+    - if: $CI_COMMIT_TAG
+  script:
+    - /bin/sh -c ".gitlab-scripts/upload.sh"
+  dependencies:
+    - package
+
+release:
+  stage: release
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  rules:
+    - if: $CI_COMMIT_TAG
+  script:
+    - /bin/sh -c ".gitlab-scripts/release.sh"
+  dependencies:
+    - upload

@@ -4,20 +4,19 @@
   "description": "Token Action HUD is a repositionable HUD of actions for a selected token",
   "authors": [
     {
-      "name": "seumas"
+      "name": "seumas",
+      "flags": {}
     }
   ],
-  "url": "This is auto replaced",
-  "flags": {},
-  "version": "This is auto replaced",
+  "url": "https://gitlab.com/vtt2/token-action-hud-coc7",
+  "version": "1.0.0",
   "compatibility": {
     "minimum": "12",
-    "verified": "12"
+    "verified": "12.327",
+    "maximum": "12"
   },
   "esmodules": [
-    "./scripts/init.js"
-  ],
-  "scripts": [
+    "scripts/init.js"
   ],
   "styles": [
     "./styles/tah-template-style.css"
@@ -26,20 +25,17 @@
     {
       "lang": "en",
       "name": "English",
-      "path": "languages/en.json"
+      "path": "languages/en.json",
+      "flags": {}
     }
   ],
-  "packs": [],
   "relationships": {
     "systems": [
       {
         "id": "CoC7",
         "type": "system",
         "compatibility": [
-          {
-            "minimum": "7.6.0",
-            "verified": "7.6.0"
-          }
+          null
         ]
       }
     ],
@@ -48,24 +44,15 @@
         "id": "token-action-hud-core",
         "type": "module",
         "compatibility": [
-          {
-            "minimum": "2.0.10",
-            "maximum": "2",
-            "verified": "2.0.10"
-          }
+          null
         ]
       }
     ],
-    "optional": [],
     "flags": {
       "optional": []
     }
   },
-  "socket": false,
-  "manifest": "This is auto replaced",
-  "download": "This is auto replaced",
-  "readme": "https://github.com/Larkinabout/fvtt-token-action-hud-template#readme",
-  "protected": false,
-  "coreTranslation": false,
-  "library": false
+  "manifest": "https://gitlab.com/api/v4/projects/45034272/packages/generic/token-action-hud-coc7/0.0.0/module.json",
+  "download": "https://gitlab.com/api/v4/projects/45034272/packages/generic/token-action-hud-coc7/0.0.0/token-action-hud-coc7.zip",
+  "readme": "https://gitlab.com/vtt2/token-action-hud-coc7"
 }
