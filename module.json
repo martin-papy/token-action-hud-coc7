@@ -1,0 +1,71 @@
+{
+  "id": "token-action-hud-coc7",
+  "title": "Token Action HUD CoC7",
+  "description": "Token Action HUD is a repositionable HUD of actions for a selected token",
+  "authors": [
+    {
+      "name": "seumas"
+    }
+  ],
+  "url": "This is auto replaced",
+  "flags": {},
+  "version": "This is auto replaced",
+  "compatibility": {
+    "minimum": "12",
+    "verified": "12"
+  },
+  "esmodules": [
+    "./scripts/init.js"
+  ],
+  "scripts": [
+  ],
+  "styles": [
+    "./styles/tah-template-style.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "languages/en.json"
+    }
+  ],
+  "packs": [],
+  "relationships": {
+    "systems": [
+      {
+        "id": "CoC7",
+        "type": "system",
+        "compatibility": [
+          {
+            "minimum": "7.6.0",
+            "verified": "7.6.0"
+          }
+        ]
+      }
+    ],
+    "requires": [
+      {
+        "id": "token-action-hud-core",
+        "type": "module",
+        "compatibility": [
+          {
+            "minimum": "2.0.10",
+            "maximum": "2",
+            "verified": "2.0.10"
+          }
+        ]
+      }
+    ],
+    "optional": [],
+    "flags": {
+      "optional": []
+    }
+  },
+  "socket": false,
+  "manifest": "This is auto replaced",
+  "download": "This is auto replaced",
+  "readme": "https://github.com/Larkinabout/fvtt-token-action-hud-template#readme",
+  "protected": false,
+  "coreTranslation": false,
+  "library": false
+}
