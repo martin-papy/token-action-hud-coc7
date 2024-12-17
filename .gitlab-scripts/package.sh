@@ -22,6 +22,7 @@ fi
 
 apt-get update -y
 apt-get install zip -y
+npm -i
 mkdir -p build/token-action-hud-coc7
 cp -r languages build/token-action-hud-coc7
 cp -r scripts/token-action-hud-coc7.min.js build/token-action-hud-coc7

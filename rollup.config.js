@@ -13,7 +13,7 @@ export default [
         },
         output: {
             format: 'esm',
-            file: 'scripts/token-action-hud-coc7.min.js'
+            file: 'token-action-hud-coc7.min.js'
         },
         plugins: [
             terser({ keep_classnames: true, keep_fnames: true }),
