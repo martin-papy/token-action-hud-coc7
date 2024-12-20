@@ -35,6 +35,6 @@ export const GROUP = {
     attributes: { id: 'attributes', name: 'CoC7.Attributes', type: 'system' },
     skills: { id: 'skills', name: 'CoC7.Skills', type: 'system' },
     combat: { id: 'combat', name: 'CoC7.Combat', type: 'system' },
-    melee: { id: 'melee', name: 'CoC7.Melee', type: 'system' },
-    ranged: { id: 'ranged', name: 'CoC7.Ranged', type: 'system' }
+    melee: { id: 'melee', name: 'CoC7.MeleeWeapons', type: 'system' },
+    ranged: { id: 'ranged', name: 'CoC7.RangedWeapons', type: 'system' }
 }

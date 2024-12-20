@@ -75,7 +75,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                     direction: 'LEFT'
                 }
                 actions.push({
-                    name: coreModule.api.Utils.i18n(this.actor.system.attribs.lck.label),
+                    name: coreModule.api.Utils.i18n('CoC7.Luck'),
                     id: 'lck',
                     tooltip,
                     encodedValue: ['attributes', 'lck'].join(this.delimiter)
@@ -88,7 +88,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                     direction: 'LEFT'
                 }
                 actions.push({
-                    name: coreModule.api.Utils.i18n(this.actor.system.attribs.san.label),
+                    name: coreModule.api.Utils.i18n('CoC7.Sanity'),
                     id: 'san',
                     tooltip,
                     encodedValue: ['attributes', 'san'].join(this.delimiter)
@@ -113,7 +113,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                     })
                 }
             }
-            await this.addActions(actions, { id: 'skills', type: 'system' })
+            await this.addActions(actions.sort((a,b) => a.name.localeCompare(b.name)), { id: 'skills', type: 'system' })
         }
 
         async buildCombat () {
