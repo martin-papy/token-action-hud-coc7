@@ -47,6 +47,10 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             this.buildCombat()
         }
 
+        #showValue () {
+            return game.settings.get('token-action-hud-core', 'tooltips') === 'none'
+        }
+
         async buildCharacteristics () {
             const actions = []
             for (const key in this.actor.system.characteristics) {
@@ -59,6 +63,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 actions.push({
                     name: coreModule.api.Utils.i18n(this.actor.system.characteristics[key].short),
                     id: key,
+                    info1: this.#showValue() ? { text: tooltip.content } : null,
                     tooltip,
                     encodedValue
                 })
@@ -77,6 +82,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 actions.push({
                     name: coreModule.api.Utils.i18n('CoC7.Luck'),
                     id: 'lck',
+                    info1: this.#showValue() ? { text: tooltip.content } : null,
                     tooltip,
                     encodedValue: ['attributes', 'lck'].join(this.delimiter)
                 })
@@ -90,6 +96,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 actions.push({
                     name: coreModule.api.Utils.i18n('CoC7.Sanity'),
                     id: 'san',
+                    info1: this.#showValue() ? { text: tooltip.content } : null,
                     tooltip,
                     encodedValue: ['attributes', 'san'].join(this.delimiter)
                 })
@@ -108,12 +115,13 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                     actions.push({
                         name: item.name,
                         id: item._id,
+                        info1: this.#showValue() ? { text: tooltip.content } : null,
                         tooltip,
                         encodedValue: ['skills', item.name].join(this.delimiter)
                     })
                 }
             }
-            await this.addActions(actions.sort((a,b) => a.name.localeCompare(b.name)), { id: 'skills', type: 'system' })
+            await this.addActions(actions.sort((a, b) => a.name.localeCompare(b.name)), { id: 'skills', type: 'system' })
         }
 
         async buildCombat () {
@@ -149,6 +157,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                         rangedActions.push({
                             name: item.name,
                             id: item._id,
+                            info1: this.#showValue() ? { text: tooltip.content } : null,
                             tooltip,
                             encodedValue: ['combat', item.id].join(this.delimiter)
                         })
@@ -156,6 +165,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                         meleeActions.push({
                             name: item.name,
                             id: item._id,
+                            info1: this.#showValue() ? { text: tooltip.content } : null,
                             tooltip,
                             encodedValue: ['combat', item.id].join(this.delimiter)
                         })
@@ -170,6 +180,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                             name: item.name,
                             id: item._id,
                             tooltip,
+                            info1: this.#showValue() ? { text: tooltip.content } : null,
                             encodedValue: ['combatSkills', item.name].join(this.delimiter)
                         })
                     } else if (item.system.properties.combat === true &&
@@ -181,6 +192,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                         rangedSkills.push({
                             name: item.name,
                             id: item._id,
+                            info1: this.#showValue() ? { text: tooltip.content } : null,
                             tooltip,
                             encodedValue: ['combatSkills', item.name].join(this.delimiter)
                         })
