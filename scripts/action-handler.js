@@ -119,12 +119,32 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         async buildCombat () {
             const rangedActions = []
             const meleeActions = []
-            const tooltip = {
-                content: '',
-                class: 'tah-system-tooltip'
-            }
+            const meleeSkills = []
+            const rangedSkills = []
+
             for (const item of this.actor.items) {
+                let value = 0
                 if (item.type === 'weapon') {
+                    const skillId = item.system.skill.main.id
+                    let skillName = item.system.skill.main.name
+                    if (typeof skillName === 'undefined' || skillName === '') {
+                        skillName = this.actor.items.find(i => i.id === skillId)?.name
+                        if (typeof skillName === 'undefined' || skillName === '') {
+                            continue
+                        }
+                    }
+                    value = this.actor.system.skills[skillName]?.value
+                    if (typeof value === 'undefined' || value === '') {
+                        value = this.actor.items.find(i => i.id === skillId)?.value
+                    }
+                    if (typeof value === 'undefined' || value === '') {
+                        // Flee!
+                        continue
+                    }
+                    const tooltip = {
+                        content: `${value}`,
+                        direction: 'LEFT'
+                    }
                     if (item.system.properties?.rngd) {
                         rangedActions.push({
                             name: item.name,
@@ -140,6 +160,31 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                             encodedValue: ['combat', item.id].join(this.delimiter)
                         })
                     }
+                } else if (item.type === 'skill') {
+                    if (item.system.properties.combat === true && item.system.properties.fighting === true) {
+                        const tooltip = {
+                            content: `${item.value}`,
+                            direction: 'LEFT'
+                        }
+                        meleeSkills.push({
+                            name: item.name,
+                            id: item._id,
+                            tooltip,
+                            encodedValue: ['combatSkills', item.name].join(this.delimiter)
+                        })
+                    } else if (item.system.properties.combat === true &&
+                        (item.system.properties.firearm === true || item.system.properties.ranged === true)) {
+                        const tooltip = {
+                            content: `${item.value}`,
+                            direction: 'LEFT'
+                        }
+                        rangedSkills.push({
+                            name: item.name,
+                            id: item._id,
+                            tooltip,
+                            encodedValue: ['combatSkills', item.name].join(this.delimiter)
+                        })
+                    }
                 }
             }
             await this.addActions(rangedActions, {
@@ -148,6 +193,14 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             })
             await this.addActions(meleeActions, {
                 id: 'melee',
+                type: 'system'
+            })
+            await this.addActions(rangedSkills, {
+                id: 'rangedSkills',
+                type: 'system'
+            })
+            await this.addActions(meleeSkills, {
+                id: 'meleeSkills',
                 type: 'system'
             })
         }

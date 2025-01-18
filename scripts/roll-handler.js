@@ -74,6 +74,9 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             case 'combat':
                 this.#handleWeaponsAction(event, actor, actionId)
                 break
+            case 'combatSkills':
+                this.#handleSkillsAction(event, actor, actionId)
+                break
             case 'utility':
                 this.#handleUtilityAction(token, actionId)
                 break

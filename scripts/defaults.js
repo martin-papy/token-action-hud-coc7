@@ -44,7 +44,9 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 name: coreModule.api.Utils.i18n('CoC7.Combat'),
                 groups: [
                     { ...groups.melee, nestId: 'combat_melee' },
-                    { ...groups.ranged, nestId: 'combat_ranged' }
+                    { ...groups.ranged, nestId: 'combat_ranged' },
+                    { ...groups.meleeSkills, nestId: 'combat_meleeSkills' },
+                    { ...groups.rangedSkills, nestId: 'combat_rangedSkills' }
                 ]
             }
         ],
