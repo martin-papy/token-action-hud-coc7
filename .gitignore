@@ -2,3 +2,4 @@ node_modules/*
 .idea/
 .vscode/
 token-action-hud-coc7.lock
+package-lock.json
