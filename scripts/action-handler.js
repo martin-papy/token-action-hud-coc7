@@ -29,7 +29,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 this.items = items
             }
 
-            if (this.actorType === 'character') {
+            if (this.actorType === 'character' || this.actorType === 'npc' || this.actorType === 'creature') {
                 this.#buildCharacterActions()
             } else if (!this.actor) {
                 this.#buildMultipleTokenActions()
@@ -72,10 +72,131 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         }
 
         async buildAttributes () {
-            const actions = []
-            if (this.actor.system.attribs.lck.value) {
+            if (typeof this.actor.system.attribs.san.value !== 'undefined' &&
+                this.actor.system.attribs.san.value !== null) {
+                const actions = []
+                const groupData = {
+                    id: 'attr_sanity',
+                    name: coreModule.api.Utils.i18n('CoC7.Sanity'),
+                    type: 'system'
+                }
+                this.addGroup(groupData, { id: 'attributes', type: 'system' }, true)
                 const tooltip = {
-                    content: '' + this.actor.system.attribs.lck.value + '',
+                    content: '' + this.actor.system.attribs.san.value + '/' +
+                        this.actor.system.attribs.san.max + '',
+                    class: 'tah-system-tooltip',
+                    direction: 'LEFT'
+                }
+                actions.push({
+                    name: coreModule.api.Utils.i18n('CoC7.SAN'),
+                    id: 'san',
+                    info1: this.#showValue() ? { text: tooltip.content } : null,
+                    tooltip,
+                    encodedValue: ['attributes', 'san'].join(this.delimiter)
+                },
+                {
+                    name: '+',
+                    id: 'sanity_add',
+                    tooltip,
+                    encodedValue: ['attributes', 'san_add'].join(this.delimiter)
+                },
+                {
+                    name: '-',
+                    id: 'sanity_subtract',
+                    tooltip,
+                    encodedValue: ['attributes', 'san_subtract'].join(this.delimiter)
+                })
+
+                await this.addActions(actions, { id: 'attr_sanity', type: 'system' })
+            }
+
+            if (typeof this.actor.system.attribs.hp.value !== 'undefined' &&
+                this.actor.system.attribs.hp.value !== null) {
+                const actions = []
+                const groupData = {
+                    id: 'attr_hp',
+                    name: coreModule.api.Utils.i18n('CoC7.HitPoints'),
+                    type: 'system'
+                }
+                this.addGroup(groupData, { id: 'attributes', type: 'system' }, true)
+                const tooltip = {
+                    content: '' + this.actor.system.attribs.hp.value + '/' +
+                        this.actor.system.attribs.hp.max + '',
+                    class: 'tah-system-tooltip',
+                    direction: 'LEFT'
+                }
+                actions.push({
+                    name: coreModule.api.Utils.i18n('CoC7.HP'),
+                    id: 'hp',
+                    info1: this.#showValue() ? { text: tooltip.content } : null,
+                    tooltip,
+                    encodedValue: ['attributes', 'hp'].join(this.delimiter)
+                },
+                {
+                    name: '+',
+                    id: 'hp_add',
+                    tooltip,
+                    encodedValue: ['attributes', 'hp_add'].join(this.delimiter)
+                },
+                {
+                    name: '-',
+                    id: 'hp_subtract',
+                    tooltip,
+                    encodedValue: ['attributes', 'hp_subtract'].join(this.delimiter)
+                })
+
+                await this.addActions(actions, { id: 'attr_hp', type: 'system' })
+            }
+
+            if (typeof this.actor.system.attribs.mp.value !== 'undefined' &&
+                this.actor.system.attribs.mp.value !== null) {
+                const actions = []
+                const groupData = {
+                    id: 'attr_mp',
+                    name: coreModule.api.Utils.i18n('CoC7.MagicPoints'),
+                    type: 'system'
+                }
+                this.addGroup(groupData, { id: 'attributes', type: 'system' }, true)
+                const tooltip = {
+                    content: '' + this.actor.system.attribs.mp.value + '/' +
+                        this.actor.system.attribs.mp.max + '',
+                    class: 'tah-system-tooltip',
+                    direction: 'LEFT'
+                }
+                actions.push({
+                    name: coreModule.api.Utils.i18n('CoC7.MP'),
+                    id: 'mp',
+                    info1: this.#showValue() ? { text: tooltip.content } : null,
+                    tooltip,
+                    encodedValue: ['attributes', 'mp'].join(this.delimiter)
+                },
+                {
+                    name: '+',
+                    id: 'mp_add',
+                    tooltip,
+                    encodedValue: ['attributes', 'mp_add'].join(this.delimiter)
+                },
+                {
+                    name: '-',
+                    id: 'mp_subtract',
+                    tooltip,
+                    encodedValue: ['attributes', 'mp_subtract'].join(this.delimiter)
+                })
+                await this.addActions(actions, { id: 'attr_mp', type: 'system' })
+            }
+
+            if (typeof this.actor.system.attribs.lck.value !== 'undefined' &&
+                this.actor.system.attribs.lck.value !== null) {
+                const actions = []
+                const groupData = {
+                    id: 'attr_lck',
+                    name: coreModule.api.Utils.i18n('CoC7.Luck'),
+                    type: 'system'
+                }
+                this.addGroup(groupData, { id: 'attributes', type: 'system' }, true)
+                const tooltip = {
+                    content: '' + this.actor.system.attribs.lck.value + '/' +
+                        this.actor.system.attribs.lck.max + '',
                     class: 'tah-system-tooltip',
                     direction: 'LEFT'
                 }
@@ -85,23 +206,21 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                     info1: this.#showValue() ? { text: tooltip.content } : null,
                     tooltip,
                     encodedValue: ['attributes', 'lck'].join(this.delimiter)
-                })
-            }
-            if (this.actor.system.attribs.san.value) {
-                const tooltip = {
-                    content: '' + this.actor.system.attribs.san.value + '',
-                    class: 'tah-system-tooltip',
-                    direction: 'LEFT'
-                }
-                actions.push({
-                    name: coreModule.api.Utils.i18n('CoC7.Sanity'),
-                    id: 'san',
-                    info1: this.#showValue() ? { text: tooltip.content } : null,
+                },
+                {
+                    name: '+',
+                    id: 'lck_add',
                     tooltip,
-                    encodedValue: ['attributes', 'san'].join(this.delimiter)
+                    encodedValue: ['attributes', 'lck_add'].join(this.delimiter)
+                },
+                {
+                    name: '-',
+                    id: 'lck_subtract',
+                    tooltip,
+                    encodedValue: ['attributes', 'lck_subtract'].join(this.delimiter)
                 })
+                await this.addActions(actions, { id: 'attr_lck', type: 'system' })
             }
-            await this.addActions(actions, { id: 'attributes', type: 'system' })
         }
 
         async buildSkills () {

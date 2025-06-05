@@ -15,7 +15,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         async handleActionClick (event, encodedValue) {
             const [actionTypeId, actionId] = encodedValue.split('|')
 
-            const knownCharacters = ['character']
+            const knownCharacters = ['character', 'npc']
 
             // If single actor is selected
             if (this.actor) {
@@ -101,7 +101,19 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          * @param {object} actor    The actor
          * @param {string} actionId The action id
          */
-        #handleAttributesAction (event, actor, actionId) {
+        async #handleAttributesAction (event, actor, actionId) {
+            if (actionId === 'hp' || actionId === 'mp') return
+            if (actionId.includes('_add') || actionId.includes('_subtract')) {
+                const attr = actionId.split('_')[0]
+                const action = actionId.split('_')[1]
+                const update = {}
+                update.system = {}
+                update.system.attribs = {}
+                update.system.attribs[attr] = {}
+                update.system.attribs[attr].value = action === 'add' ? this.actor.system.attribs[attr].value + 1 : this.actor.system.attribs[attr].value - 1
+                if (update.system.attribs[attr].value > this.actor.system.attribs[attr].max || update.system.attribs[attr].value < 0) return
+                return await this.actor.update(update)
+            }
             actor.attributeCheck(actionId, event.shiftKey)
         }
 
