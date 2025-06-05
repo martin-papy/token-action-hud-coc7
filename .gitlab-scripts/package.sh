@@ -27,7 +27,6 @@ npm run build
 mkdir -p build/token-action-hud-coc7
 cp -r languages build/token-action-hud-coc7
 cp -r token-action-hud-coc7.min.js build/token-action-hud-coc7
-cp -r styles build/token-action-hud-coc7
 cp module.json build/token-action-hud-coc7
 mkdir -p build/artifacts
 cp module.json build/artifacts

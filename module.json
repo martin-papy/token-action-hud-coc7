@@ -9,17 +9,16 @@
     }
   ],
   "url": "https://gitlab.com/vtt2/token-action-hud-coc7",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "compatibility": {
     "minimum": "12",
-    "verified": "12.327",
-    "maximum": "12"
+    "verified": "13.344",
+    "maximum": "13"
   },
   "esmodules": [
     "scripts/init.js"
   ],
   "styles": [
-    "./styles/tah-template-style.css"
   ],
   "languages": [
     {
