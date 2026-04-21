@@ -3,3 +3,5 @@ node_modules/*
 .vscode/
 token-action-hud-coc7.lock
 package-lock.json
+.claude/settings.local.json
+token-action-hud-coc7.code-workspace
